@@ -5,11 +5,11 @@ import './styles/main.scss';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './store/store';
-import HomePageContainer from './containers/HomePageContainer';
+import TablePageContainer from './containers/TablePageContainer';
 
 ReactDOM.render(
   <Provider store={store}>
-    <HomePageContainer />
+    <TablePageContainer />
   </Provider>,
   document.getElementById('root')
 );

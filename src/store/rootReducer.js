@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
+import fetchTableReducer from './fetchTable/fetchTableReducer';
 
 export default combineReducers({
-  data: (store = {}) => store
+  table: fetchTableReducer
 });
