@@ -2,9 +2,11 @@ import {
   FETCH_TABLE,
   LOAD_TABLE,
   CHANGE_TABLE_ELEM,
-  SET_CURRENT
+  SET_CURRENT,
+  CHANGE_CURRENCY
 } from './types';
 import { resolvePath } from '../../helpers/index';
+import { regexUrl } from '../../helpers';
 
 export const loadTable = loading => ({ type: LOAD_TABLE, loading });
 
@@ -21,9 +23,15 @@ export const changeTableElemValue = (name, value) => {
     type: CHANGE_TABLE_ELEM,
     name,
     value,
-    valueType: +value * 1 ? 'number' : 'string'
+    valueType: regexUrl.test(value) ? 'url' : +value * 1 ? 'number' : 'string'
   };
 };
+
+export const changeTableElemValueCurrency = (name, currency) => ({
+  type: CHANGE_CURRENCY,
+  name,
+  currency
+});
 
 export const handleChangeTableElement = ({ target: { name, value } }) => {
   return changeTableElemValue(name, value);

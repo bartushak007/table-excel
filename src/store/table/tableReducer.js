@@ -2,7 +2,8 @@ import {
   FETCH_TABLE,
   LOAD_TABLE,
   CHANGE_TABLE_ELEM,
-  SET_CURRENT
+  SET_CURRENT,
+  CHANGE_CURRENCY
 } from './types';
 
 const tableReducer = (store = { values: {}, loading: false }, action) => {
@@ -30,6 +31,18 @@ const tableReducer = (store = { values: {}, loading: false }, action) => {
       return {
         ...store,
         current: action.current
+      };
+
+    case CHANGE_CURRENCY:
+      return {
+        ...store,
+        values: {
+          ...store.values,
+          [action.name]: {
+            ...store.values[action.name],
+            currency: action.currency
+          }
+        }
       };
 
     default:

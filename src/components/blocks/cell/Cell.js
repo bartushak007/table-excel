@@ -7,14 +7,16 @@ const Cell = memo(
     letter,
     value,
     isCurrent,
+    currency,
     handleChangeTableElement,
     setCurrentTableElement,
     isCurrentTableColl,
     name,
     valueType,
-    doJobWithFormula
+    doJobWithFormula,
+    changeTableElemValueCurrency
   }) => {
-    const handleClick = ({ target: { name, value } }) => {
+    const handleClick = () => {
       doJobWithFormula(value, name, valueType);
       setCurrentTableElement(name);
     };
@@ -28,16 +30,29 @@ const Cell = memo(
             ? 'cell'
             : 'cell cell__ttl'
         } ${isCurrentTableColl ? 'cell__ttl--highlight' : ''}`}
-        onClick={handleClick}
       >
         {rowIndex ? (
-          <input
-            className="cell__field"
-            value={value}
-            name={name}
-            title={value}
-            onChange={handleChangeTableElement}
-          />
+          <div className="cell__content" onClick={handleClick}>
+            {!currency || isCurrent ? (
+              <input
+                className={`cell__field ${valueType}`}
+                value={value}
+                name={name}
+                title={value}
+                onChange={handleChangeTableElement}
+              />
+            ) : (
+              value + currency
+            )}
+            {valueType === 'number' && isCurrent && (
+              <div
+                className="cell__currency"
+                onClick={() => changeTableElemValueCurrency(name, 'UAH')}
+              >
+                UAH
+              </div>
+            )}
+          </div>
         ) : (
           letter
         )}
@@ -52,7 +67,12 @@ Cell.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleChangeTableElement: PropTypes.func,
   name: PropTypes.string,
-  isCurrentTableColl: PropTypes.bool
+  isCurrentTableColl: PropTypes.bool,
+  doJobWithFormula: PropTypes.func,
+  setCurrentTableElement: PropTypes.func,
+  valueType: PropTypes.string,
+  isCurrent: PropTypes.bool,
+  changeTableElemValueCurrency: PropTypes.func
 };
 
 export default Cell;

@@ -6,7 +6,8 @@ import { selectValues, selectCurrent } from '../store/table/tableSelectors';
 import {
   handleChangeTableElement,
   setCurrentTableElement,
-  doJobWithFormula
+  doJobWithFormula,
+  changeTableElemValueCurrency
 } from '../store/table/tableActions';
 
 const CellContainer = ({
@@ -18,10 +19,12 @@ const CellContainer = ({
   isCurrentTableColl,
   name,
   isCurrent,
-  doJobWithFormula
+  doJobWithFormula,
+  changeTableElemValueCurrency
 }) => {
   const value = tableValue ? tableValue.value : '';
   const valueType = tableValue ? tableValue.valueType : null;
+  const currency = tableValue ? tableValue.currency : null;
 
   return (
     <Cell
@@ -35,7 +38,9 @@ const CellContainer = ({
         setCurrentTableElement,
         isCurrentTableColl,
         isCurrent,
-        doJobWithFormula
+        doJobWithFormula,
+        changeTableElemValueCurrency,
+        currency
       }}
     />
   );
@@ -59,5 +64,10 @@ const mapStateToProps = (state, props) => {
 
 export default connect(
   mapStateToProps,
-  { handleChangeTableElement, setCurrentTableElement, doJobWithFormula }
+  {
+    handleChangeTableElement,
+    setCurrentTableElement,
+    doJobWithFormula,
+    changeTableElemValueCurrency
+  }
 )(CellContainer);
