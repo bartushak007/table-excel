@@ -4,22 +4,24 @@ import Cell from '../components/blocks/cell';
 
 import { selectValues, selectCurrent } from '../store/table/tableSelectors';
 import {
-  changeTableElemValue,
-  setCurrentTableElement
+  handleChangeTableElement,
+  setCurrentTableElement,
+  doJobWithFormula
 } from '../store/table/tableActions';
 
 const CellContainer = ({
   rowIndex,
   letter,
   tableValue,
-  changeTableElemValue,
+  handleChangeTableElement,
   setCurrentTableElement,
   isCurrentTableColl,
   name,
-  isCurrent
+  isCurrent,
+  doJobWithFormula
 }) => {
   const value = tableValue ? tableValue.value : '';
-  const valueType = tableValue ? tableValue.type : null;
+  const valueType = tableValue ? tableValue.valueType : null;
 
   return (
     <Cell
@@ -29,10 +31,11 @@ const CellContainer = ({
         value,
         valueType,
         name,
-        changeTableElemValue,
+        handleChangeTableElement,
         setCurrentTableElement,
         isCurrentTableColl,
-        isCurrent
+        isCurrent,
+        doJobWithFormula
       }}
     />
   );
@@ -56,5 +59,5 @@ const mapStateToProps = (state, props) => {
 
 export default connect(
   mapStateToProps,
-  { changeTableElemValue, setCurrentTableElement }
+  { handleChangeTableElement, setCurrentTableElement, doJobWithFormula }
 )(CellContainer);

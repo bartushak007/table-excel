@@ -1,3 +1,10 @@
-.table {
-  width: 3000px;
+.table-page {
+  &__table-container {
+    width: 100%;
+    overflow: auto;
+  }
+
+  &__table {
+    width: 3000px;
+  }
 }

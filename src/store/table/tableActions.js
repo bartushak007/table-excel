@@ -16,7 +16,7 @@ export const fetchTable = () => dispatch => {
     });
 };
 
-export const changeTableElemValue = ({ target: { name, value } }) => {
+export const changeTableElemValue = (name, value) => {
   return {
     type: CHANGE_TABLE_ELEM,
     name,
@@ -25,9 +25,52 @@ export const changeTableElemValue = ({ target: { name, value } }) => {
   };
 };
 
-export const setCurrentTableElement = ({ target: { name } }) => {
-  return {
-    type: SET_CURRENT,
-    current: name
-  };
+export const handleChangeTableElement = ({ target: { name, value } }) => {
+  return changeTableElemValue(name, value);
+};
+
+export const setCurrentTableElement = name => (dispatch, store) => {
+  (!store().controls.addressLine || !store().table.current) &&
+    dispatch({
+      type: SET_CURRENT,
+      current: name
+    });
+};
+
+export const doJobWithFormula = (value, name, valueType) => (
+  dispatch,
+  store
+) => {
+  const {
+    table: { current, values },
+    controls: { addressLine }
+  } = store();
+
+  if (current && current !== name) {
+    addressLine.startsWith('=sum') &&
+      valueType === 'number' &&
+      dispatch(
+        changeTableElemValue(
+          current,
+          +(values[current] ? values[current].value : 0) + +value
+        )
+      );
+
+    addressLine.startsWith('=concat') &&
+      dispatch(
+        changeTableElemValue(
+          current,
+          (values[current] ? values[current].value : '') + value
+        )
+      );
+
+    addressLine.startsWith('=average') &&
+      valueType === 'number' &&
+      dispatch(
+        changeTableElemValue(
+          current,
+          (+(values[current] ? values[current].value : value) + +value) / 2
+        )
+      );
+  }
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import RowContainer from '../../containers/RowContainer';
+import ControlsContainer from '../../containers/ControlsContainer';
 
 const Table = ({ alphabet, rows }) => {
   const tableRows = new Array(rows).fill(null);
@@ -11,9 +12,14 @@ const Table = ({ alphabet, rows }) => {
   };
 
   return (
-    <table className="table">
-      <thead>{tableRows.map(renderRows)}</thead>
-    </table>
+    <div className="table-page">
+      <ControlsContainer />
+      <div className="table-page__table-container">
+        <table className="table-page__table">
+          <thead>{tableRows.map(renderRows)}</thead>
+        </table>
+      </div>
+    </div>
   );
 };
 

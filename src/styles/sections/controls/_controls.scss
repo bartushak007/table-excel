@@ -1,0 +1,14 @@
+.controls {
+  &__address-line-container {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 0.6rem;
+  }
+  &__address-line {
+    width: 100%;
+    margin: 0.4rem;
+    border: 0;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+    padding: 0.3rem;
+  }
+}

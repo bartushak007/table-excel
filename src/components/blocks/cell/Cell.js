@@ -7,11 +7,18 @@ const Cell = memo(
     letter,
     value,
     isCurrent,
-    changeTableElemValue,
+    handleChangeTableElement,
     setCurrentTableElement,
     isCurrentTableColl,
-    name
+    name,
+    valueType,
+    doJobWithFormula
   }) => {
+    const handleClick = ({ target: { name, value } }) => {
+      doJobWithFormula(value, name, valueType);
+      setCurrentTableElement(name);
+    };
+
     return (
       <td
         className={`${
@@ -21,7 +28,7 @@ const Cell = memo(
             ? 'cell'
             : 'cell cell__ttl'
         } ${isCurrentTableColl ? 'cell__ttl--highlight' : ''}`}
-        onClick={setCurrentTableElement}
+        onClick={handleClick}
       >
         {rowIndex ? (
           <input
@@ -29,7 +36,7 @@ const Cell = memo(
             value={value}
             name={name}
             title={value}
-            onChange={changeTableElemValue}
+            onChange={handleChangeTableElement}
           />
         ) : (
           letter
@@ -42,8 +49,8 @@ const Cell = memo(
 Cell.propTypes = {
   rowIndex: PropTypes.number,
   letter: PropTypes.string,
-  value: PropTypes.string,
-  changeTableElemValue: PropTypes.func,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  handleChangeTableElement: PropTypes.func,
   name: PropTypes.string,
   isCurrentTableColl: PropTypes.bool
 };
