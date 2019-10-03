@@ -1,11 +1,25 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Table = ({ tableValues, alphabet }) => {
-  console.log(tableValues, alphabet);
-  return <div className="">Table</div>;
+import Row from '../../components/blocks/row';
+
+const Table = ({ alphabet, rows }) => {
+  const tableRows = new Array(rows).fill(null);
+
+  const renderRows = (_, index) => {
+    return <Row key={index} rowIndex={index} alphabet={alphabet} />;
+  };
+
+  return (
+    <table className="table">
+      <thead>{tableRows.map(renderRows)}</thead>
+    </table>
+  );
 };
 
-// Home.propTypes = {};
+Table.propTypes = {
+  alphabet: PropTypes.arrayOf(PropTypes.string),
+  rows: PropTypes.number
+};
 
 export default Table;

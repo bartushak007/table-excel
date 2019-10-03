@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import fetchTableReducer from './fetchTable/fetchTableReducer';
+import tableReducer from './table/tableReducer';
 
 export default combineReducers({
-  table: fetchTableReducer
+  table: tableReducer
 });

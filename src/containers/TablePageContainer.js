@@ -1,33 +1,21 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Table from '../pages/table';
-import { fetchTable } from '../store/fetchTable/fetchTableActions';
+import { fetchTable } from '../store/table/tableActions';
 import {
-  selectValues,
   selectLoading,
   selectAlphabet,
   selectRows
-} from '../store/fetchTable/fetchTableSelectors';
+} from '../store/table/tableSelectors';
 
-const TablePageContainer = ({
-  fetchTable,
-  tableValues,
-  loading,
-  alphabet,
-  rows
-}) => {
+const TablePageContainer = ({ fetchTable, loading, alphabet, rows }) => {
   useEffect(fetchTable, []);
 
-  return !loading ? (
-    <Table {...{ tableValues, alphabet, rows }} />
-  ) : (
-    <div>Loading...</div>
-  );
+  return !loading ? <Table {...{ alphabet, rows }} /> : <div>Loading...</div>;
 };
 
 const mapStateToProps = state => {
   return {
-    tableValues: selectValues(state),
     loading: selectLoading(state),
     alphabet: selectAlphabet(state),
     rows: selectRows(state)
