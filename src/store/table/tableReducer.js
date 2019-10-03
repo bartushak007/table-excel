@@ -18,7 +18,11 @@ const tableReducer = (store = { values: {}, loading: false }, action) => {
         ...store,
         values: {
           ...store.values,
-          [action.name]: { ...store.values[action.name], value: action.value }
+          [action.name]: {
+            ...store.values[action.name],
+            value: action.value,
+            valueType: action.valueType
+          }
         }
       };
 

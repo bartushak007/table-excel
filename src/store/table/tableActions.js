@@ -20,11 +20,14 @@ export const changeTableElemValue = ({ target: { name, value } }) => {
   return {
     type: CHANGE_TABLE_ELEM,
     name,
-    value
+    value,
+    valueType: +value * 1 ? 'number' : 'string'
   };
 };
 
-export const setCurrentTableElement = current => ({
-  type: SET_CURRENT,
-  current
-});
+export const setCurrentTableElement = ({ target: { name } }) => {
+  return {
+    type: SET_CURRENT,
+    current: name
+  };
+};

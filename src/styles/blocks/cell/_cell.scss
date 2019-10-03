@@ -6,6 +6,10 @@
     font-weight: 500;
     min-width: 1.6rem;
     text-align: center;
+
+    &--highlight {
+      background: $high-gray;
+    }
   }
 
   &__field {
@@ -15,5 +19,9 @@
     width: 100%;
     height: 100%;
     padding: 0.2rem;
+  }
+
+  &--current {
+    background: $grayest;
   }
 }
