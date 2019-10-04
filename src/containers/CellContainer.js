@@ -2,7 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Cell from '../components/blocks/cell';
 
-import { selectValues, selectCurrent } from '../store/table/tableSelectors';
+import {
+  selectValues,
+  selectCurrent,
+  selectCurrencyList
+} from '../store/table/tableSelectors';
 import {
   handleChangeTableElement,
   setCurrentTableElement,
@@ -10,40 +14,13 @@ import {
   changeTableElemValueCurrency
 } from '../store/table/tableActions';
 
-const CellContainer = ({
-  rowIndex,
-  letter,
-  tableValue,
-  handleChangeTableElement,
-  setCurrentTableElement,
-  isCurrentTableColl,
-  name,
-  isCurrent,
-  doJobWithFormula,
-  changeTableElemValueCurrency
-}) => {
+const CellContainer = props => {
+  const { tableValue } = props;
   const value = tableValue ? tableValue.value : '';
   const valueType = tableValue ? tableValue.valueType : null;
   const currency = tableValue ? tableValue.currency : null;
 
-  return (
-    <Cell
-      {...{
-        rowIndex,
-        letter,
-        value,
-        valueType,
-        name,
-        handleChangeTableElement,
-        setCurrentTableElement,
-        isCurrentTableColl,
-        isCurrent,
-        doJobWithFormula,
-        changeTableElemValueCurrency,
-        currency
-      }}
-    />
-  );
+  return <Cell {...props} {...{ value, valueType, currency }} />;
 };
 
 const mapStateToProps = (state, props) => {
@@ -58,6 +35,7 @@ const mapStateToProps = (state, props) => {
     isCurrent: selectCurrent(state) === name,
     isCurrentTableColl,
     name,
+    currencyList: selectCurrencyList(state),
     ...props
   };
 };

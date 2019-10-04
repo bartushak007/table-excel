@@ -2,10 +2,14 @@
   border: 1px solid $gray;
 
   &__content {
+    min-width: 8rem;
     display: flex;
     position: relative;
     padding: 0.2rem;
-    line-height: 0;
+    line-height: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &__ttl {
@@ -35,7 +39,6 @@
 
   &__currency {
     display: flex;
-    background: $green;
 
     color: $black;
     flex-direction: column;

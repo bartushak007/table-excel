@@ -27,8 +27,9 @@
     "y",
     "z"
   ],
+  "currencyList": ["NUM", "UAH", "USD"],
   "values": {
-    "a1": { "value": "text", "type": "text" }
+    "a1": { "value": "text", "valueType": "text" }
   },
   "rows": 36
 }
