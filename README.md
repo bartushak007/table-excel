@@ -1,1 +1,1 @@
-[link](https://bartushak007.github.io/table-excel/)
+[table-excel link](https://bartushak007.github.io/table-excel/)
