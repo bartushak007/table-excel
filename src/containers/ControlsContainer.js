@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { selectCurrent } from '../store/table/tableSelectors';
+import { selectCurrent, selectValues } from '../store/table/tableSelectors';
 import { selectAddressLine } from '../store/controls/controlsSelectors';
 import { setAddressLine } from '../store/controls/controlsActions';
 
@@ -14,10 +14,12 @@ const ControlsContainer = props => {
 const mapStateToProps = (state, props) => {
   const current = selectCurrent(state);
   const addressLine = selectAddressLine(state);
+  const currentValue = selectValues(state)[current];
 
   return {
     ...props,
     current,
+    currentType: currentValue ? currentValue.valueType : null,
     addressLine
   };
 };
