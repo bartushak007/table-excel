@@ -56,17 +56,23 @@ export const doJobWithFormula = (value, name, valueType) => (
     controls: { addressLine }
   } = store();
 
-  if (current.name && current.name !== name && addressLine.startsWith('=sum')) {
-    if (valueType === 'number' && values[name]) {
+  const newestCurrent = values[current.name] && values[current.name].currency;
+
+  if (current.name && current.name !== name && addressLine) {
+    if (
+      valueType === 'number' &&
+      values[name] &&
+      addressLine.startsWith('=sum')
+    ) {
       const newTableValue = changeTableElemValue(
         current.name,
         +(values[current.name] ? values[current.name].value : 0) + +value
       );
 
-      current.currency && current.currency === values[name].currency
+      newestCurrent === values[name].currency
         ? dispatch(newTableValue)
-        : (!current.currency && !values[name].currency) ||
-          !values[name].currency === 'NUM'
+        : (!newestCurrent || newestCurrent === 'NUM') &&
+          (!values[name].currency || values[name].currency === 'NUM')
         ? dispatch(newTableValue)
         : alert('Wrong currency type');
     } else if (addressLine.startsWith('=sum')) alert('Cannot be added');
@@ -83,33 +89,23 @@ export const doJobWithFormula = (value, name, valueType) => (
     }
 
     if (
-      current.name &&
-      current.name !== name &&
-      addressLine.startsWith('=average')
+      addressLine.startsWith('=average') &&
+      valueType === 'number' &&
+      values[name]
     ) {
-      if (!current.currency) {
-        alert('Forbidden');
-        return;
-      }
-      if (
-        addressLine.startsWith('=average') &&
-        valueType === 'number' &&
-        values[name]
-      ) {
-        const newTableValue = changeTableElemValue(
-          current.name,
-          (+(values[current.name] ? values[current.name].value : value) +
-            +value) /
-            2
-        );
+      const newTableValue = changeTableElemValue(
+        current.name,
+        (+(values[current.name] ? values[current.name].value : value) +
+          +value) /
+          2
+      );
 
-        current.currency && current.currency === values[name].currency
-          ? dispatch(newTableValue)
-          : (!current.currency && !values[name].currency) ||
-            !values[name].currency === 'NUM'
-          ? dispatch(newTableValue)
-          : alert('Wrong currency type');
-      } else alert('Cannot be compared');
-    }
+      newestCurrent === values[name].currency
+        ? dispatch(newTableValue)
+        : (!newestCurrent || newestCurrent === 'NUM') &&
+          (!values[name].currency || values[name].currency === 'NUM')
+        ? dispatch(newTableValue)
+        : alert('Wrong currency type');
+    } else if (addressLine.startsWith('=average')) alert('Cannot be compared');
   }
 };
